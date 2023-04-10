@@ -92,6 +92,7 @@ module.exports = {
     },
 
     // Remove a reaction to a thought's reactions list
+    // req.body.reactionId is that reaction's _id
     deleteReaction(req, res) {
         Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
