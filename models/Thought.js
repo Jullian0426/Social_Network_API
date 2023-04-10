@@ -34,6 +34,14 @@ const thoughtSchema = new Schema(
     }
 );
 
+// Virtual that retrieves the length of the thought's reactions array
+thoughtSchema
+    .virtual('reactionCount')
+    .get(function () {
+        return this.reactions.length;
+    });
+
+
 const Thought = model('thought', thoughtSchema);
 
 module.exports = Thought;
