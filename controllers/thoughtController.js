@@ -1,10 +1,10 @@
-const {  } = require('../models');
+const { Thought, User } = require('../models');
 
 module.exports = {
 
     // Get all thoughts
     getThoughts(req, res) {
-        Course.find()
+        Thought.find()
             .then((thoughts) => res.json(thoughts))
             .catch((err) => res.status(500).json(err));
     },
@@ -12,7 +12,6 @@ module.exports = {
     // Get a thought
     getSingleThought(req, res) {
         Thought.findOne({ _id: req.params.thoughtId })
-            .select('-__v')
             .then((thought) =>
                 !thought
                     ? res.status(404).json({ message: 'No thought with that ID' })
@@ -26,7 +25,7 @@ module.exports = {
         Thought.create(req.body)
         .then(dbThoughtData => {
             User.findOneAndUpdate(
-                { _id: body.userId },
+                { _id: req.body.userId },
                 { $push: { thoughts: dbThoughtData._id } },
                 { new: true }
             )
@@ -53,8 +52,8 @@ module.exports = {
                 !thought
                     ? res.status(404).json({ message: 'No thought with that ID' })
                     : User.findOneAndUpdate(
-                        { username: dbThoughtData.username },
-                        { $pull: { thoughts: params.id } }
+                        { username: thought.username },
+                        { $pull: { thoughts: req.params.id } }
                     )
                     .then(() => res.json({ message: 'Thought deleted!' })
                     .catch((err) => res.status(500).json(err))
@@ -81,7 +80,7 @@ module.exports = {
     addReaction(req, res) {
         Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
-            { $addToSet: { reactions: params.thoughtId } },
+            { $addToSet: { reactions: req.body } },
             { runValidators: true, new: true }
         )
             .then((thought) =>
@@ -92,19 +91,17 @@ module.exports = {
             .catch((err) => res.status(500).json(err));
     },
 
-    // Remove a friend to a thought's friends list
+    // Remove a reaction to a thought's reactions list
     deleteReaction(req, res) {
-        Thought.findOneAndDelete(
+        Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
-            { $pull: { friends: params.thoughtId } },
-            { runValidators: true, new: true }
+            { $pull: { reactions: {_id: req.body.reactionId } }},
             )
             .then((thought) =>
                 !thought
                     ? res.status(404).json({ message: 'No thought with that ID' })
-                    : Student.deleteMany({ _id: { $in: thought.thoughts } })
+                    : res.json({ message: 'Reaction deleted!' })
             )
-            .then(() => res.json({ message: 'Reaction deleted!' }))
             .catch((err) => res.status(500).json(err));
     },
 };

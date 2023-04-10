@@ -1,5 +1,5 @@
 const { Schema, Types, model } = require('mongoose');
-const reactionSchema = require('./Reaction');
+const { reactionSchema } = require('./Reaction');
 
 // Schema to create Thought model
 const thoughtSchema = new Schema(
@@ -19,11 +19,11 @@ const thoughtSchema = new Schema(
             default: Date.now,
             get: (date) => date.toLocaleDateString("en-US")
         },
-        username: {
-            type: String,
-            required: true
+        username:  {
+            type: Schema.Types.ObjectId,
+            ref: 'user',
         },
-        reactions: [reactionSchema],
+        reactions: [reactionSchema]
     },
     {
         toJSON: {

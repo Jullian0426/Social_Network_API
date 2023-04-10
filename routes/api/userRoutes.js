@@ -16,7 +16,7 @@ router
     .post(createUser);
 
 // Routes for single users
-router.route('/:id')
+router.route('/:userId')
     .get(getSingleUser)
     .put(updateUser)
     .delete(deleteUser)

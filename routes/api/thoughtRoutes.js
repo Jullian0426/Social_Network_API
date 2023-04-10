@@ -17,7 +17,7 @@ router
 
 // Routes for single thoughts
 router
-    .route('/:id')
+    .route('/:thoughtId')
     .get(getSingleThought)
     .put(updateThought)
     .delete(deleteThought);
