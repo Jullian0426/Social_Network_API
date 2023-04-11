@@ -18,7 +18,7 @@ Enter GET, POST, PUT, and DELETE routes into Insomnia to interact with the datab
 
 Example video of usage:
 
-https://drive.google.com/file/d/1QzUpSU6YsLwZvV93ZzTiFDOvnJVxBuM_/view
+https://drive.google.com/file/d/1tLlRIsYjGD9SytgDRHDAfthm1AdImiic/view
 
 
 ## License
