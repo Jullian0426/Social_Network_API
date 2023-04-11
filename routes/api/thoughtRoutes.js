@@ -16,7 +16,6 @@ router
     .post(createThought);
 
 // Routes for single thoughts
-// :thoughtId is the thought's _id
 router
     .route('/:thoughtId')
     .get(getSingleThought)
@@ -24,7 +23,6 @@ router
     .delete(deleteThought);
 
 // Routes for reactions
-// :thoughtId is the thought's _id
 router.route('/:thoughtId/reactions/')
     .post(addReaction)
     .delete(deleteReaction)
